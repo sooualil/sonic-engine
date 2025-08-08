@@ -25,7 +25,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir .
 
 # Clone the sonic-engine_templates repository
-RUN git clone https://github.com/AhmedCoolProjects/sonic-engine_templates.git templates
+RUN git clone https://github.com/AhmedCoolProjects/sonic_engine_templates.git templates
 
 # Set the working directory to hello_world inside the templates directory
 WORKDIR /usr/src/sonic-engine/templates/hello_world/
