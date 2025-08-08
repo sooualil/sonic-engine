@@ -1,14 +1,9 @@
-# Use an official Redis as the base image
-FROM redis:latest
-
-# Expose the default port for Redis (6379)
-EXPOSE 6379
-
-# Command to run the Redis server
-CMD ["redis-server"]
-
-# Use python:3.9.18 as the base image
 FROM python:3.9.18
+
+# Install redis-server
+RUN apt-get update && apt-get install -y redis-server
+# Remove cache to reduce image size
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /var/cache/apt/*
 
 # Set the working directory in the container
 WORKDIR /usr/src/sonic_engine
@@ -17,10 +12,10 @@ WORKDIR /usr/src/sonic_engine
 COPY . /usr/src/sonic_engine/
 
 # Install the dependencies from requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Install the sonic_engine package from the local directory
-RUN pip install /usr/src/sonic_engine/
+RUN pip install --no-cache-dir /usr/src/sonic_engine/
 
 # Clone the sonic_engine_templates repository
 RUN git clone https://github.com/AhmedCoolProjects/sonic_engine_templates.git templates
