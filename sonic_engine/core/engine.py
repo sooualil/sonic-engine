@@ -1,7 +1,6 @@
 import os
 from shutil import which
 from time import sleep
-import sonic_engine.
 from sonic_engine.core.extension import ExtensionHandler
 from sonic_engine.core.yapsy_methods import YapsyHandler
 from sqlite3 import NotSupportedError
