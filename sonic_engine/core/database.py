@@ -13,8 +13,7 @@ class Database:
 
     def __init__(self):
         self.redis = redis.StrictRedis(
-            host="localhost",
-            port=6379,
+            unix_socket_path="/var/redis.sock",
             db=0,
             charset="utf-8",
             socket_keepalive=True,
