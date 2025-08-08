@@ -13,7 +13,7 @@ class Database:
 
     def __init__(self):
         self.redis = redis.StrictRedis(
-            unix_socket_path="/var/redis.sock",
+            unix_socket_path="/run/redis.sock",
             db=0,
             charset="utf-8",
             socket_keepalive=True,
