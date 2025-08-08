@@ -1,7 +1,7 @@
 FROM python:3.9.18
 
 # Install redis-server
-RUN apt-get update && apt-get install -y redis-server supervisor
+RUN apt-get update && apt-get install -y redis-server
 # Remove cache to reduce image size
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /var/cache/apt/*
 
@@ -11,11 +11,11 @@ COPY . /usr/src/sonic_engine/
 # Set the working directory in the container
 WORKDIR /usr/src/sonic_engine
 
-# Copy supervisord configuration file
-COPY ./docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
 # Copy redis configuration file
 COPY ./docker/redis.conf /etc/redis/redis.conf
+
+# Copy entrypoint script
+COPY ./docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # Install the dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
@@ -29,5 +29,5 @@ RUN git clone https://github.com/AhmedCoolProjects/sonic_engine_templates.git te
 # Set the working directory to hello_world inside the templates directory
 WORKDIR /usr/src/sonic_engine/templates/hello_world/
 
-# Command to run the Python application
-CMD ["/usr/bin/supervisord"]
+# Run the entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
