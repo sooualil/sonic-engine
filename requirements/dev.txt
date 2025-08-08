@@ -1,0 +1,4 @@
+# install common requirements
+-r common.txt
+pytest==7.4.0
+tox==4.11.4

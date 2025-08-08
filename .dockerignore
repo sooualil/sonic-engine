@@ -1,0 +1,14 @@
+.venv
+assets
+tests
+*.pys
+*.md
+# exclude README.md
+!README.md
+requirements-tests.txt
+template
+templates
+extensions-repos
+redis
+*.egg-info
+*.git

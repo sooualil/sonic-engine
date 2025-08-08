@@ -1,0 +1,5 @@
+numpy==1.25.1
+pyaml==23.7.0
+redis==4.2.2
+virtualenv==20.25.0
+Yapsy==1.12.2
