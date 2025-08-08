@@ -5,17 +5,23 @@ RUN apt-get update && apt-get install -y redis-server
 # Remove cache to reduce image size
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /var/cache/apt/*
 
+# Copy the current directory contents into the container at /usr/src/sonic_engine
+COPY . /usr/src/sonic_engine/
+
 # Set the working directory in the container
 WORKDIR /usr/src/sonic_engine
 
-# Copy the current directory contents into the container at /usr/src/sonic_engine
-COPY . /usr/src/sonic_engine/
+# Copy supervisord configuration file
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Copy redis configuration file
+COPY docker/redis.conf /etc/redis/redis.conf
 
 # Install the dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install the sonic_engine package from the local directory
-RUN pip install --no-cache-dir /usr/src/sonic_engine/
+RUN pip install --no-cache-dir .
 
 # Clone the sonic_engine_templates repository
 RUN git clone https://github.com/AhmedCoolProjects/sonic_engine_templates.git templates
@@ -24,4 +30,4 @@ RUN git clone https://github.com/AhmedCoolProjects/sonic_engine_templates.git te
 WORKDIR /usr/src/sonic_engine/templates/hello_world/
 
 # Command to run the Python application
-CMD ["python", "app.py"]
+CMD ["/usr/bin/supervisord"]
