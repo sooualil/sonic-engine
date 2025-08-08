@@ -31,4 +31,4 @@ RUN git clone https://github.com/AhmedCoolProjects/sonic_engine_templates.git te
 WORKDIR /usr/src/sonic-engine/templates/hello_world/
 
 # Run the entrypoint
-ENTRYPOINT ["/usr/src/sonic-engine/docker/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
